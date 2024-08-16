@@ -1,6 +1,7 @@
 package com.yjy.skiaapplication;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -31,6 +32,7 @@ public class SkiaCanvasView extends SurfaceView implements SurfaceHolder.Callbac
     private HandlerThread mHandlerThread;
     private Handler mHandler;
     private static final int DRAW = 1;
+    private static final String TAG = SkiaCanvasView.class.getSimpleName();
 
     public SkiaCanvasView(Context context) {
         this(context,null);
@@ -61,14 +63,18 @@ public class SkiaCanvasView extends SurfaceView implements SurfaceHolder.Callbac
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        if (!mHandlerThread.isAlive()) {
+            mHandlerThread = new HandlerThread("Skia");
+            mHandlerThread.start();
+            mHandler = new SkiaHandler(mHandlerThread.getLooper());
+        }
         Message message = new Message();
         message.what = DRAW;
         message.obj = holder.getSurface();
         message.arg1 = getWidth();
         message.arg2 = getHeight();
         mHandler.sendMessage(message);
-        Log.e("create","width:"+getWidth());
-        Log.e("create","height"+getHeight());
+        Log.e(TAG,"[surfaceCreated] width:"+getWidth() + ", height"+getHeight());
     }
 
     @Override
@@ -102,8 +108,9 @@ public class SkiaCanvasView extends SurfaceView implements SurfaceHolder.Callbac
     }
 
 
-
-
-
-
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Log.d("SkiaCanvasView", "[onDraw]");
+        super.onDraw(canvas);
+    }
 }

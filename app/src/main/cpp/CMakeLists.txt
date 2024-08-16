@@ -9,7 +9,7 @@ project("skia_example")
 
  include_directories("${CMAKE_SOURCE_DIR}")
 
-link_directories(${PROJECT_SOURCE_DIR}/../../../libs/armeabi-v7a)
+link_directories(${PROJECT_SOURCE_DIR}/../libs/armeabi-v7a)
 #include_directories(${CMAKE_SOURCE_DIR})
 
 aux_source_directory(${CMAKE_SOURCE_DIR} SRC_LIST)
@@ -41,7 +41,7 @@ add_library(skia SHARED IMPORTED)
 #        "${CMAKE_SOURCE_DIR}/include/utils")
 
 set_target_properties(skia PROPERTIES IMPORTED_LOCATION
-        "${PROJECT_SOURCE_DIR}/../../../libs/${ANDROID_ABI}/libskia.so")
+        "${PROJECT_SOURCE_DIR}/../libs/${ANDROID_ABI}/libskia.so")
 
 
 

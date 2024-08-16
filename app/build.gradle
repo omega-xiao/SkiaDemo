@@ -9,18 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                abiFilters "armeabi-v7a"
-            }
-        }
 
-
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
+        ndk {
+//        abiFilters "arm64-v8a"
+            abiFilters "armeabi-v7a"
         }
     }
 
@@ -33,9 +25,12 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
-            version "3.10.2"
         }
     }
+
+
+
+    ndkVersion '23.1.7779620'
 }
 
 dependencies {
